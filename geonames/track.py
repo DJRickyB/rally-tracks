@@ -1,6 +1,6 @@
 import random
 import os
-
+import base64
 
 class QueryParamSource:
     # We need to stick to the param source API
@@ -39,6 +39,20 @@ class PureTermsQueryParamSource(QueryParamSource):
 
         return result
 
+class PureTermsQueryParamSourceTraced(PureTermsQueryParamSource):
+    # indeed a very dumb idea for a param-source but shows how traffic would look if rally had a switch for enabling
+    # opentracing tooling for Elastic APM or Jaeger, if we wanted to debug a thing
+    def params(self):
+        result = super().params()
+        trace_id = "%032x" % random.randrange(16**30)
+        parent_id = "%016x" % random.randrange(16**30)
+        trace_header = f"00-{trace_id}-{parent_id}-01"
+        result["headers"] = {
+            "traceparent": trace_header,
+            "tracestate": f"myfakeapm-{base64.b64encode(parent_id.encode('ascii'))}"
+        }
+        result["opaque-id"] = trace_id
+        return result
 
 class FilteredTermsQueryParamSource(QueryParamSource):
     def params(self):
@@ -106,11 +120,13 @@ class ProhibitedTermsQueryParamSource(QueryParamSource):
         return result
 
 
+
 def refresh(es, params):
     es.indices.refresh(index=params.get("index", "_all"))
 
 
 def register(registry):
     registry.register_param_source("pure-terms-query-source", PureTermsQueryParamSource)
+    registry.register_param_source("pure-terms-query-source-traced", PureTermsQueryParamSourceTraced)
     registry.register_param_source("filtered-terms-query-source", FilteredTermsQueryParamSource)
     registry.register_param_source("prohibited-terms-query-source", ProhibitedTermsQueryParamSource)

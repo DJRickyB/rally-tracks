@@ -56,110 +56,13 @@
           }
         },
         {
-          "operation": "index-stats",
-          "warmup-iterations": 500,
-          "iterations": 1000,
-          "target-throughput": 90
-        },
-        {
-          "operation": "node-stats",
-          "warmup-iterations": 100,
-          "iterations": 1000,
-          "target-throughput": 90
-        },
-        {
-          "operation": "default",
-          "warmup-iterations": 500,
-          "iterations": 1000,
-          "target-throughput": 50
-        },
-        {
           "operation": "term",
           "warmup-iterations": 500,
           "iterations": 1000,
           "target-throughput": 150
         },
         {
-          "operation": "phrase",
-          "warmup-iterations": 500,
-          "iterations": 1000,
-          "target-throughput": 150
-        },
-        {
-          "operation": "country_agg_uncached",
-          "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 3.6
-        },
-        {
-          "operation": "country_agg_cached",
-          "warmup-iterations": 1000,
-          "iterations": 1000,
-          "target-throughput": 100
-        },
-        {
-          "operation": "scroll",
-          "warmup-iterations": 200,
-          "iterations": 100,
-          "#COMMENT": "Throughput is considered per request. So we issue one scroll request per second which will retrieve 25 pages",
-          "target-throughput": 0.8
-        },
-        {
-          "operation": "expression",
-          "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 2
-        },
-        {
-          "operation": "painless_static",
-          "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 1.5
-        },
-        {
-          "operation": "painless_dynamic",
-          "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 1.5
-        },
-        {
-          "operation": "decay_geo_gauss_function_score",
-          "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 1
-        },
-        {
-          "operation": "decay_geo_gauss_script_score",
-          "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 1
-        },
-        {
-          "operation": "field_value_function_score",
-          "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 1.5
-        },
-        {
-          "operation": "field_value_script_score",
-          "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 1.5
-        },
-        {
-          "operation": "random_function_score",
-          "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 1.5
-        },
-        {
-          "operation": "random_script_score",
-          "warmup-iterations": 200,
-          "iterations": 100,
-          "target-throughput": 1.5
-        },
-        {
-          "operation": "large_terms",
+          "operation": "large_terms_trace_enabled",
           "warmup-iterations": 200,
           "iterations": 100,
           "target-throughput": 1.1

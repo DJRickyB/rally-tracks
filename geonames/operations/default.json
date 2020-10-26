@@ -7,6 +7,7 @@
     {
       "name": "index-update",
       "operation-type": "bulk",
+      "request-timeout": 0.1,
       "bulk-size": {{bulk_size | default(5000)}},
       "ingest-percentage": {{ingest_percentage | default(100)}},
       "conflicts": "{{conflicts | default('random')}}",
@@ -26,6 +27,9 @@
     {
       "name": "term",
       "operation-type": "search",
+      "headers": {
+        "Authorization2": "Basic {{ b64_user_password | default('YWRtaW46cGFzc3cwcmQ=') }}"
+      },
       "body": {
         "query": {
           "term": {
@@ -277,7 +281,12 @@
           }
         }
       }
-    },     
+    },
+    {
+      "name": "large_terms_trace_enabled",
+      "operation-type": "search",
+      "param-source": "pure-terms-query-source-traced"
+    },
     {
       "name": "large_terms",
       "operation-type": "search",
